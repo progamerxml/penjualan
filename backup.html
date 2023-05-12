@@ -1,0 +1,298 @@
+<?php  if ($res=="") { $res=$_GET[res];}  if ($res!=""){ ?> <div class="alert"><span class="closebtn" onclick='this.parentElement.style.display="none";'>&times;</span><?php echo $res; ?> &nbsp;   </div>
+<?php } ?>
+
+<div class="row">
+  <div class="form-style-2"class = "col">
+  <div class="form-style-2-heading"> Input penjualan</div>   
+  <table width="100%" border="0" cellspacing="0" cellpadding="0" id="tabel_input"> 
+  <tr>
+    <td width="4%" ><strong>Tanggal</strong></td>
+    <td width="1%" ><strong>:</strong></td>
+   
+    <td width="5%"  ><?php echo date("Y-m-d"); ?></td>
+    <td width="4%"  ><strong>No Faktur </strong></td>
+    <td width="1%"  ><strong>:</strong></td>
+    <td width="13%"  ><input size="20" type="text" class="input-fieldB" name="nofaktur"  id="nofaktur" value="<?php echo $nofakjual; ?>" /></td>
+    <td width="4%" ><strong>Suplier</strong></td>
+    <td width="2%" ><strong>:</strong></td>
+    <td width="5%" ><select name="spl_jual" id="spl_jual" class="select-field">
+      <option value="">Pilih</option>
+      <?php $query = "SELECT  nama  FROM suplier order by nama      ";   $rs = mysql_query($query);  while ($r = mysql_fetch_object($rs)) {  $sel_1=""; if($spl_jual==$r->nama){$sel_1="selected";}else{$sel_1="";} echo "<option value='$r->nama' $sel_1>&nbsp; $r->nama &nbsp;</option>"; } ?>
+    </select></td>
+	<td width="4%" ><strong>Suplier</strong></td>
+    <td width="2%" ><strong>:</strong></td>
+    <td width="5%" ><select name="spl_jual" id="spl_jual" class="select-field">
+      <option value="">Pilih</option>
+      <?php $query = "SELECT  nama  FROM suplier order by nama      ";   $rs = mysql_query($query);  while ($r = mysql_fetch_object($rs)) {  $sel_1=""; if($spl_jual==$r->nama){$sel_1="selected";}else{$sel_1="";} echo "<option value='$r->nama' $sel_1>&nbsp; $r->nama &nbsp;</option>"; } ?>
+    </select></td>
+    <td width="60%" rowspan="2"  align="right"  valign="top">
+    
+    <table width="47%"  id="tbl_header_jual" cellspacing="0" cellpadding="0"> 
+      <tr>
+        <td  >TOTAL : Rp <span id="totaljual">100.0000</span></td>
+      </tr>
+      </table></td>
+     
+  </tr>
+   
+ 
+</table>
+
+</div> 
+<div class="form-style-2" class = "col">
+
+    <table width="100%" border="0" cellspacing="0" cellpadding="0"> 
+      <tr>
+        <td valign="top" width="60%">
+         <div class="form-style-2-heading">Data penjualan</div>
+         <form action="" name="penjualan" method="post"> <input type="hidden" name="h" value="<?php echo $_GET[h];?>" />
+         <input type="hidden" name="nofakjual_h" value="<?php echo $nofakjual;?>" />
+         <input type="hidden" name="spl_jual_h" value="<?php echo $spl_jual;?>" />
+         
+         <table id="tabel">
+          <tr>
+            <th>Kode</th>
+            <th>Nama</th>
+            <th>Qty</th>
+            <th>Stok</th>
+            <th>Harga Jual</th>
+            <th>Harga Beli</th>
+            <th>Sub Total</th>
+            <th width="2%">&nbsp;</th>
+          </tr>
+          <?php   
+     
+     
+    $query = "SELECT a.id,a.produk_id,a.qty,b.nama,a.harga_jual,a.harga_jual,b.jml_stok FROM  tmp_jual a, produk b WHERE a.produk_id=b.produk_id"; 
+     
+    $rs = mysql_query($query); 
+        $k=1;
+        while ($r = mysql_fetch_object($rs)) { 
+            $subtotal=$r->harga_jual*$r->qty;
+        
+            echo "<tr valign='top'> 
+            <td>$r->produk_id</td>
+            <td style='font-size:10px;'>$r->nama</td>  
+            <td>$r->qty</td>  
+            <td>$r->jml_stok</td> 
+            <td>$r->harga_jual</td>
+            <td>$r->harga_jual</td>
+            <td>$subtotal</td>
+            <td class='options-width'  align='center'>  <a href='?h=$_GET[h]&id=$r->id&act=haptmpjual'> <input  class='hapus' type='button' value='X' name='Batal'/></a> </td>
+            </tr>  "; 
+            $k++;
+            $total_jual=$total_jual+$subtotal;
+        }
+        
+        if ($k=="1"){
+            
+            echo "<tr valign='top'> 
+            <td colspan='8' align='center' height='200'><strong>Data Belum Ada</strong></td>
+            </tr> 
+          <tr>";
+            
+        }
+    
+    ?>  
+            <th colspan="8" align="left">
+            
+            <table width="20%" border="0" cellspacing="0" cellpadding="0" >
+              <!-- <tr>
+                <th>Pembayaran :</th>
+                <th align="left"><select name="pembayaran" id="pembayaran" class="select-field">
+                  <option value="">Pilih</option>
+                  <?php $query = "SELECT  nama  FROM akun_kas order by nama      ";   $rs = mysql_query($query);  while ($r = mysql_fetch_object($rs)) { echo "<option value='$r->nama' >&nbsp; $r->nama &nbsp;</option>"; } ?>
+                </select></th>
+              </tr> -->
+              <!-- <tr>
+                <th colspan="2">
+                    <input type="submit" value="Simpan" name="Simpan_jual" />
+                      <input type="button" value="Batal" name="Batal" onclick="window.location='?h=<?php echo $_GET[h];?>&amp;act=deltmp'" />
+                      <input type="hidden" name="total_jual" value="<?php echo $total_jual;?>" /></th>
+                </tr> -->
+            </table>
+            
+            
+            </th>
+            </tr>
+          
+         </table>
+        
+        </form>
+        </td>
+        <td  style="padding-left:20px;" valign="top">
+         <form action="" name="penjualan" method="get"> <input type="hidden" name="h" value="<?php echo $_GET[h];?>" />
+        <div class="form-style-2-heading">Data Barang</div>
+       
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td width="10%"><label for="field2" class="kosong" ><strong>Kode</strong></label></td>
+            <td width="5%"><strong>:</strong></td>
+            <td width="26%"><input size="20" type="text" class="input-fieldB" name="kode_cari"   id="kode_cari" value="<?php echo $_GET[kode_cari];?>"   /></td>
+            <td width="18%"><strong>Nama</strong></td>
+            <td width="3%"><strong>:</strong></td>
+            <td width="26%"><input size="20" type="text" class="input-fieldB" name="nama_cari"   id="nama_cari"  value="<?php echo $_GET[nama_cari];?>" /></td>
+            <td width="12%"><button type="submit"  id="Cari" value="Cari" name="Cari" class='button cariB'>Cari</button></td>
+          </tr>
+        </table>
+        <table id="tabel" style="margin-top:3px;">
+          <tr>
+      <th>Kode</th>
+       <th>Nama</th>  
+        <th width="6%">Qty</th>  
+        <th>Stok</th>
+        <th width="6%">Harga jual</th>
+        <th width="6%">Harga Beli</th>
+        <th width="2%">&nbsp;</th>
+      </tr>
+    <?php   
+    $provider_cari=$_GET[provider_cari];
+    $nama_cari=$_GET[nama_cari];
+    $kode_cari=$_GET[kode_cari];
+    
+    $where="";
+    if ($provider_cari!=""){ $where.=" and  provider='$provider_cari'"; }
+    if ($kode_cari!=""){ $where.=" and  produk_id like '%$kode_cari%'"; }
+    if ($nama_cari!=""){ $where.=" and  nama like '%$nama_cari%'"; }
+    
+    $query = "SELECT * FROM   produk  where id>0 $where order by id desc limit 14 "; 
+     
+    $rs = mysql_query($query); 
+        $i=1;
+        while ($r = mysql_fetch_object($rs)) { 
+        $pid=$r->produk_id;
+        
+            echo "<tr valign='top'> 
+            <td>$pid</td>
+            <td style='font-size:10px;'>$r->nama</td>  
+            <td> <input size='5' type='text' class='input-fieldB' name='qty_tmp_$i' id='qty_tmp_$i' value='1'  style='text-align:center'></td>  
+            <td align='right'>$r->jml_stok</td> 
+            <td> <input size='4' type='text' class='input-fieldB' name='hb_tmp_jual_$i' id='hb_$i' value='$r->harga_jual'  style='text-align:center'></td> 
+            <td> <input size='4' type='text' class='input-fieldB' name='hj_tmp_jual_$i' id='hj_$i' value='$r->harga_beli'  style='text-align:center'></td> 
+            <td class='options-width'> <button  class='hapus' onclick=\"return CEKINPUT($i,'$pid')\">+</button>
+            
+             
+            
+            </td>
+            </tr>  ";
+            $i++;
+        }
+        
+    
+    ?>
+     
+    </table></form> </td>
+      </tr>
+       
+    </table> 
+    </div> 
+
+
+
+    <!-- layout retur jualku -->
+
+    <div class="container-fluid">
+      <div class="row">
+          <div class="col-lg-8">
+              <div class="container-fluid border border-light rounded shadow-sm bg-light py-1">
+                  <div class="row mt-1 mb-3 fw-bold text-capitalize fs-5" style="color:#ff8500;">
+                      <div class="container-fluid">
+                          input return penjualan
+                      </div>
+                  </div>
+                  <div class="row my-1 ">
+                      <div class="col-lg-4">
+                          Tanggal :
+                          <div class="border-bottom border-1 border-warning">
+                              <input type="text" name="tanggal" id="" class="border-0 bg-light">
+                          </div>
+                      </div>
+                      <div class="col-lg-4">
+                          No. return :
+                          <div class="border-bottom border-1 border-warning">
+                              <input type="text" name="no_return" id="" class="border-0 bg-light">
+                          </div>
+                      </div>
+                      <div class="col-lg-2">
+                          Pembayaran :
+                          <div class="border-bottom border-1 border-warning">
+                              <select name="pembayaran" id="pembayaran" class="border-0 bg-light" style="width: 100%;">
+                                  <option value="">Pilih</option>
+                                  <?php $query = "SELECT  nama  FROM akun_kas order by nama";   $rs = mysql_query($query);  while ($r = mysql_fetch_object($rs)) { echo "<option value='$r->nama' >&nbsp; $r->nama &nbsp;</option>"; } ?>
+                              </select>
+                          </div>
+                      </div>
+                      <div class="col-lg-2 d-flex my-auto justify-content-center">
+                          <button type="submit" class="border-0 px-2 py-1 rounded text-white fw-bold my-3" style="background-color: #ff8500;">simpan</button>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="col-lg-4">
+              <div class="container-fluid rounded shadow py-1" style="background-color: #ff8500;">
+                  <div class="row fw-bold text-capitalize fs-5 text-white">
+                      Total :
+                  </div>
+                  <div class="row mb-3 fw-bold text-capitalize fs-1 text-white d-flex justify-content-center">
+                      Rp.700.000,-
+                  </div>
+              </div>
+          </div>
+      </div>
+      <div class="row">
+          <div class="col-lg-7 bg-success">
+              <div class="container-fluid border border-warning rounded my-3">
+                  <div class="container-fluid">
+                      data return penjualan
+                  </div>
+                  <table class="table table-borderless">
+                      <thead class="border-bottom border-warning">
+                          <tr>
+                          <th scope="col">kode</th>
+                          <th scope="col">nama</th>
+                          <th scope="col">jumlah</th>
+                          <th scope="col">stok</th>
+                          <th scope="col">harga beli</th>
+                          <th scope="col">sub total</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <?php   
+                              $query = "SELECT a.id,a.noretur,a.nofaktur,a.suplier,a.produk_id,a.harga_beli,a.qty,b.nama,b.jml_stok FROM  tmp_retur_beli a,produk b WHERE a.noretur='$noretur' and a.produk_id=b.produk_id";                         
+                              $rs = mysql_query($query); 
+                              $k=1;
+                              while ($r = mysql_fetch_object($rs)) { 
+                                  $subtotal=$r->harga_beli*$r->qty;
+                                  
+                                  echo "<tr valign='top'> 
+                                  <td>$r->produk_id</td>
+                                  <td style='font-size:10px;'>$r->nama</td>  
+                                  <td>$r->qty</td>  
+                                  <td>$r->jml_stok</td>  
+                                  <td>$r->harga_beli</td>
+                                  <td>$subtotal</td>
+                                  <td class='options-width'  align='center'>  <a href='?h=$_GET[h]&id=$r->id&act=haptmpretur'> <input  class='hapus' type='button' value='X' name='Batal'/></a> </td>
+                                  </tr>  "; 
+                                  $k++;
+                                  $total_beli=$total_beli+$subtotal;
+                              }
+                                  
+                              if ($k=="1"){
+                                      
+                                  echo "<tr valign='center'> 
+                                  <td colspan='8' align='center' class='d-flex align-items-center' height='200'><strong>Data Belum Ada</strong></td>
+                                  </tr> 
+                              <tr>";
+                                      
+                              }
+      
+                          ?>
+                      </tbody>
+                  </table>
+              </div>
+          </div>
+          <div class="col-lg-5 bg-secondary">
+              data return all
+          </div>
+      </div>
+  </div>

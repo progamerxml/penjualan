@@ -1,0 +1,121 @@
+
+
+#tbl_header_jual {   
+  border: 1px solid #FFC6AA;
+  font-weight: bold;
+  vertical-align:top;
+  height:50px;  
+  font-size: 14px; 
+}#tbl_header_jual td{ 
+	padding: 7px; 
+}
+ 
+
+#tabel {
+	font-family: arial;
+	font-size: 12px;
+	border-collapse: collapse;
+	width: 100%;
+	
+	
+}
+
+#tabel td, #tabel th {
+  border: 1px solid #FFC6AA; 
+  padding: 7px;
+  vertical-align:middle;
+}
+#tabel th {
+  font-weight: bold;
+  border-right:#FFF;
+  padding: 5px;
+}
+
+#tabel tr:nth-child(even){background-color: #f2f2f2;}
+
+#tabel tr:hover {background-color: #ddd;}
+
+#tabel th {
+  padding-top: 7px;
+  padding-bottom: 7px;
+ 
+  background-color:#FFC6AA;
+  color:#000;
+}
+#tabel td.options-width {
+	width:120px;
+	font-weight: bold;
+	border-right:#FFF;
+	padding: 7px; 
+	border-right: 1px solid #FFC6AA;
+	text-align:center;
+	vertical-align:middle;
+   
+}
+ 
+ 
+ /* tombol */
+ 
+.button.edit
+{
+	background-color: #0099CC; /* Blue background color */ 
+	border-radius: 3px; /* Curve of border corners */  
+	color: white; /* Text color */
+	height:20px; 
+	width:45px; 	
+}
+.button.hapus
+{
+	background-color:#FF6A6A; /* Blue background color */ 
+	border-radius: 3px; /* Curve of border corners */  
+	color: white; /* Text color */
+	height:20px;
+	margin-left:10px;
+ 
+	width:45px; 	
+}
+ .button.cari
+{
+	background-color: #FF8500; /* Blue background color */ 
+	border-radius: 3px; /* Curve of border corners */  
+	color: white; /* Text color */
+	height:30px; 
+	width:45px; 	
+}
+
+ /* tombol   */
+ 
+.pagination {
+	display: inline-block;
+	font-family: arial;
+	font-size: 12px;
+	margin-bottom:5px;
+}
+
+.pagination a {
+  color: black;
+  float: left;
+  padding: 6px 12px;
+  text-decoration: none;
+}
+
+.pagination a.active {
+  background-color: #4CAF50;
+  color: white;
+  border-radius: 5px;
+}
+
+.pagination a:hover:not(.active) {
+  background-color: #ddd;
+  border-radius: 5px;
+}
+.pagination2 {
+	display: inline-block;
+	font-family: arial;
+	font-size: 12px;
+	float: right;  
+	padding: 6px 12px;
+		margin-bottom:5px;
+}
+
+
